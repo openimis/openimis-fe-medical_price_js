@@ -1,6 +1,6 @@
 {
   "name": "@openimis/fe-medical_pricelist",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "AGPL-3.0-only",
   "description": "openIMIS Frontend Medical Price List reference module",
   "repository": "openimis/openimis-fe-medical_pricelist_js",

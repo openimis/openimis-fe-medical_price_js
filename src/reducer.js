@@ -9,8 +9,7 @@ function reducer(
         fetchingPrice: null,
         fetchingPricelist: false,
         fetchedPricelist: false,
-        servicePricelist: {},
-        itemPricelist: {},
+        pricelist: {},
         errorPricelist: null,
     },
     action,
@@ -22,8 +21,7 @@ function reducer(
                 fetchingPrice: action.payload,
                 fetchingPricelist: false,
                 fetchedPricelist: false,
-                servicePricelist: {},
-                itemPricelist: {},
+                pricelist: {},
                 errorPricelist: null,
             };
         case 'MEDICAL_PRICELIST_LOAD_REQ':
@@ -31,8 +29,7 @@ function reducer(
                 ...state,
                 fetchingPricelist: true,
                 fetchedPricelist: false,
-                servicePricelist: {},
-                itemPricelist: {},
+                pricelist: {},
                 errorPricelist: null,
             };
         case 'MEDICAL_PRICELIST_LOAD_RESP':
@@ -40,8 +37,10 @@ function reducer(
                 ...state,
                 fetchingPricelist: false,
                 fetchedPricelist: true,         
-                servicePricelist: arrayToMap(action.payload.data.pricelists.services),
-                itemPricelist: arrayToMap(action.payload.data.pricelists.items),
+                pricelist: {
+                    services: arrayToMap(action.payload.data.pricelists.services),
+                    items: arrayToMap(action.payload.data.pricelists.items)
+                },
                 errorPricelist: formatGraphQLError(action.payload)
             };
         case 'MEDICAL_PRICELIST_LOAD_ERR':

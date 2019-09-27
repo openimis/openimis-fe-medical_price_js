@@ -7,7 +7,7 @@ import _ from "lodash";
 class PriceListLoader extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (!_.isEqual(prevProps.fetchingPrice, this.props.fetchingPrice)) {
-            // this.props.fetchPriceList(this.props.fetchingPrice);
+            this.props.fetchPriceList(this.props.fetchingPrice);
         }
     }
     render() {

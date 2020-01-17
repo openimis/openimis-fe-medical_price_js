@@ -1,23 +1,44 @@
-import { graphql, formatQuery, decodeId } from "@openimis/fe-core";
+import { graphql, formatQuery, formatPageQuery, decodeId } from "@openimis/fe-core";
 
-export function fetchPriceList(hf) {
+export function fetchPriceLists(hf) {
     let filters = []
     let projections = []
-
-    if (!hf.servicePricelist && !hf.itemPricelist) {
+    if (!hf.servicesPricelist && !hf.itemsPricelist) {
         //nothing to do...
-        return dispatch => {}
+        return dispatch => { }
     }
-    if (!!hf.servicePricelist) {
-        filters.push(`servicePricelistId: ${decodeId(hf.servicePricelist.id)}`);
+    if (!!hf.servicesPricelist) {
+        filters.push(`servicesPricelistId: ${decodeId(hf.servicesPricelist.id)}`);
         projections.push("services{id,priceOverrule}");
     }
-    if (!!hf.itemPricelist) {
-        filters.push(`itemPricelistId: ${decodeId(hf.itemPricelist.id)}`);
+    if (!!hf.itemsPricelist) {
+        filters.push(`itemsPricelistId: ${decodeId(hf.itemsPricelist.id)}`);
         projections.push("items{id,priceOverrule}");
     }
     let payload = formatQuery("pricelists",
         filters, projections
     );
     return graphql(payload, 'MEDICAL_PRICELIST_LOAD');
+}
+
+export function fetchServicesPriceLists(location) {
+    let filters = [
+        `${!!location ? `location_Uuid:"${location.uuid}"` : ""}`,
+    ]
+    let projections = ["id", "uuid", "name"]
+    let payload = formatPageQuery("servicesPricelists",
+        filters, projections
+    );
+    return graphql(payload, 'MEDICAL_LOCATION_SERVICES_PRICELIST', { location });
+}
+
+export function fetchItemsPriceLists(location) {
+    let filters = [
+        `${!!location ? `location_Uuid:"${location.uuid}"` : ""}`,
+    ]
+    let projections = ["id", "uuid", "name"]
+    let payload = formatPageQuery("itemsPricelists",
+        filters, projections
+    );
+    return graphql(payload, 'MEDICAL_LOCATION_ITEMS_PRICELIST', { location });
 }

@@ -12,6 +12,8 @@ import { fetchServicesPriceLists } from "../actions"
 class ServicesPriceListPicker extends Component {
     state = {
         baseOptions: [],
+        nationalOptionFecthed: false,
+        nationalOptions: [],
         regionOptions: [],
         districtOptions: [],
     }
@@ -47,23 +49,29 @@ class ServicesPriceListPicker extends Component {
 
     componentDidMount() {
         this.setOptions({});
+        this.props.fetchServicesPriceLists();
     }
 
+    formatOption = (o) => { return { value: o, label: o.name } }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!this.state.nationalOptionFecthed && !_.isEqual(prevProps.fetchedServicesPricelists, this.props.fetchedServicesPricelists)) {
+            this.setState({
+                nationalOptionFecthed: true,
+                nationalOptions: this.props.servicesPricelists.map(this.formatOption)
+            })
+            return
+        }
         if (!this.setOptions(prevProps)) {
             if (!_.isEqual(prevProps.fetchedServicesPricelists, this.props.fetchedServicesPricelists)
                 && !!this.props.fetchedServicesPricelists) {
                 if (!!this.props.fetchedServicesPricelists.location.parent) {
                     this.setState({
-                        districtOptions: this.props.servicesPricelists.map(
-                            o => {return { value: o, label: o.name }}
-                        )
+                        districtOptions: this.props.servicesPricelists.map(this.formatOption)
                     })
                 } else {
                     this.setState({
-                        regionOptions: this.props.servicesPricelists.map(
-                            o => {return { value: o, label: o.name }}
-                        )
+                        regionOptions: this.props.servicesPricelists.map(this.formatOption)
                     })
                 }
             }
@@ -74,6 +82,7 @@ class ServicesPriceListPicker extends Component {
         const { name, value, onChange, readOnly } = this.props;
         let options = [
             ...this.state.baseOptions,
+            ...this.state.nationalOptions,
             ...this.state.regionOptions,
             ...this.state.districtOptions,
         ];

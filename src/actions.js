@@ -22,7 +22,7 @@ export function fetchPriceLists(hf) {
 }
 
 export function fetchServicesPriceLists(location) {
-    let filters = [`${!!location ? `location_Uuid:"${location.uuid}"` : "location_Isnull: true"}`]
+    let filters = ['first: 99', `${!!location ? `location_Uuid:"${location.uuid}"` : "location_Isnull: true"}`]
     let projections = ["id", "uuid", "name"]
     let payload = formatPageQuery("servicesPricelists",
         filters, projections

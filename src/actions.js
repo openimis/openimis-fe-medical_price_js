@@ -1,24 +1,27 @@
 import { graphql, formatQuery, formatPageQuery, decodeId } from "@openimis/fe-core";
 
-export function fetchPriceLists(hf) {
+export function fetchPriceLists(servicesPricelist, itemsPricelist) {
     let filters = []
     let projections = []
-    if (!hf.servicesPricelist && !hf.itemsPricelist) {
-        //nothing to do...
+    if (!servicesPricelist && !itemsPricelist) {
+        // nothing to do
         return dispatch => { }
     }
-    if (!!hf.servicesPricelist) {
-        filters.push(`servicesPricelistId: ${decodeId(hf.servicesPricelist.id)}`);
+    if (!!servicesPricelist) {
+        filters.push(`servicesPricelistId: ${decodeId(servicesPricelist.id)}`);
         projections.push("services{id,priceOverrule}");
     }
-    if (!!hf.itemsPricelist) {
-        filters.push(`itemsPricelistId: ${decodeId(hf.itemsPricelist.id)}`);
+    if (!!itemsPricelist) {
+        filters.push(`itemsPricelistId: ${decodeId(itemsPricelist.id)}`);
         projections.push("items{id,priceOverrule}");
     }
     let payload = formatQuery("pricelists",
         filters, projections
     );
-    return graphql(payload, 'MEDICAL_PRICELIST_LOAD');
+    return graphql(payload, 'MEDICAL_PRICELIST_LOAD', {
+        servicesPricelist: !!servicesPricelist && servicesPricelist.id,
+        itemsPricelist: !!itemsPricelist && itemsPricelist.id
+    });
 }
 
 export function fetchServicesPriceLists(location) {

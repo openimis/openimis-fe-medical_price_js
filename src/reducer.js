@@ -9,7 +9,8 @@ function reducer(
         fetchingPrice: null,
         fetchingPricelist: false,
         fetchedPricelist: false,
-        pricelist: {},
+        servicesPricelists: {},
+        itemsPricelists: {},
         errorPricelist: null,
     },
     action,
@@ -33,14 +34,20 @@ function reducer(
                 errorPricelist: null,
             };
         case 'MEDICAL_PRICELIST_LOAD_RESP':
+            let itemsPricelists = { ...state.itemsPricelists }
+            if (!!action.meta.itemsPricelist) {
+                itemsPricelists[action.meta.itemsPricelist] = arrayToMap(action.payload.data.pricelists.items)
+            }
+            let servicesPricelists = { ...state.servicesPricelists }
+            if (!!action.meta.servicesPricelist) {
+                servicesPricelists[action.meta.servicesPricelist] = arrayToMap(action.payload.data.pricelists.services)
+            }
             return {
                 ...state,
                 fetchingPricelist: false,
-                fetchedPricelist: true,         
-                pricelist: {
-                    services: arrayToMap(action.payload.data.pricelists.services),
-                    items: arrayToMap(action.payload.data.pricelists.items)
-                },
+                fetchedPricelist: true,
+                itemsPricelists,
+                servicesPricelists,
                 errorPricelist: formatGraphQLError(action.payload)
             };
         case 'MEDICAL_PRICELIST_LOAD_ERR':

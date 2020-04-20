@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchPriceList } from "../actions";
+import { fetchPriceLists } from "../actions";
 import _ from "lodash";
 
 class PriceListLoader extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (!_.isEqual(prevProps.fetchingPrice, this.props.fetchingPrice)) {
-            this.props.fetchPriceList(this.props.fetchingPrice);
+            this.props.fetchPriceLists(
+                !!this.props.servicesPricelists[this.props.fetchingPrice.servicesPricelist.id] ? null : this.props.fetchingPrice.servicesPricelist,
+                !!this.props.itemsPricelists[this.props.fetchingPrice.itemsPricelist.id] ? null : this.props.fetchingPrice.itemsPricelist,
+            );
         }
     }
     render() {
@@ -17,10 +20,12 @@ class PriceListLoader extends Component {
 
 const mapStateToProps = state => ({
     fetchingPrice: state.medical_pricelist.fetchingPrice,
+    servicesPricelists: state.medical_pricelist.servicesPricelists,
+    itemsPricelists: state.medical_pricelist.itemsPricelists,
 });
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ fetchPriceList }, dispatch);
+    return bindActionCreators({ fetchPriceLists }, dispatch);
 };
 
 

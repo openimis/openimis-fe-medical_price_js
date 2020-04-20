@@ -1,23 +1,43 @@
-import { graphql, formatQuery, decodeId } from "@openimis/fe-core";
+import { graphql, formatQuery, formatPageQuery, decodeId } from "@openimis/fe-core";
 
-export function fetchPriceList(hf) {
+export function fetchPriceLists(servicesPricelist, itemsPricelist) {
     let filters = []
     let projections = []
-
-    if (!hf.servicePricelist && !hf.itemPricelist) {
-        //nothing to do...
-        return dispatch => {}
+    if (!servicesPricelist && !itemsPricelist) {
+        // nothing to do
+        return dispatch => { }
     }
-    if (!!hf.servicePricelist) {
-        filters.push(`servicePricelistId: ${decodeId(hf.servicePricelist.id)}`);
+    if (!!servicesPricelist) {
+        filters.push(`servicesPricelistId: ${decodeId(servicesPricelist.id)}`);
         projections.push("services{id,priceOverrule}");
     }
-    if (!!hf.itemPricelist) {
-        filters.push(`itemPricelistId: ${decodeId(hf.itemPricelist.id)}`);
+    if (!!itemsPricelist) {
+        filters.push(`itemsPricelistId: ${decodeId(itemsPricelist.id)}`);
         projections.push("items{id,priceOverrule}");
     }
     let payload = formatQuery("pricelists",
         filters, projections
     );
-    return graphql(payload, 'MEDICAL_PRICELIST_LOAD');
+    return graphql(payload, 'MEDICAL_PRICELIST_LOAD', {
+        servicesPricelist: !!servicesPricelist && servicesPricelist.id,
+        itemsPricelist: !!itemsPricelist && itemsPricelist.id
+    });
+}
+
+export function fetchServicesPriceLists(location) {
+    let filters = ['first: 99', `${!!location ? `location_Uuid:"${location.uuid}"` : "location_Isnull: true"}`]
+    let projections = ["id", "uuid", "name"]
+    let payload = formatPageQuery("servicesPricelists",
+        filters, projections
+    );
+    return graphql(payload, 'MEDICAL_LOCATION_SERVICES_PRICELIST', { location });
+}
+
+export function fetchItemsPriceLists(location) {
+    let filters = [`${!!location ? `location_Uuid:"${location.uuid}"` : "location_Isnull: true"}`]
+    let projections = ["id", "uuid", "name"]
+    let payload = formatPageQuery("itemsPricelists",
+        filters, projections
+    );
+    return graphql(payload, 'MEDICAL_LOCATION_ITEMS_PRICELIST', { location });
 }

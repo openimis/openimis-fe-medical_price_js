@@ -11,6 +11,7 @@ class ItemsPriceListPicker extends Component {
         return <PriceListPicker
             label="itemsPricelist"
             fetchPriceLists={this.props.fetchItemsPriceLists}
+            parseKey="itemsPricelists"
             name={name}
             value={value}
             readOnly={readOnly}

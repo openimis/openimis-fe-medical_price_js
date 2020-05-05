@@ -29,7 +29,7 @@ class PriceListPicker extends Component {
         this.props.fetchPriceLists(null).then(
             r => this._isMounted && this.setState({
                 loading: false,
-                nationalOptions: parseData(r.payload.data.servicesPricelists).map(this.formatOption)
+                nationalOptions: parseData(r.payload.data[this.props.parseKey]).map(this.formatOption)
             })
         );
     }
@@ -51,7 +51,7 @@ class PriceListPicker extends Component {
                     e => this.props.fetchPriceLists(this.props.region).then(
                         r => this._isMounted && this.setState({
                             loading: false,
-                            regionOptions: parseData(r.payload.data.servicesPricelists).map(this.formatOption)
+                            regionOptions: parseData(r.payload.data[this.props.parseKey]).map(this.formatOption)
                         })
                     ))
             }
@@ -65,7 +65,7 @@ class PriceListPicker extends Component {
                     e => this.props.fetchPriceLists(this.props.district).then(
                         r => this._isMounted && this.setState({
                             loading: false,
-                            districtOptions: parseData(r.payload.data.servicesPricelists).map(this.formatOption)
+                            districtOptions: parseData(r.payload.data[this.props.parseKey]).map(this.formatOption)
                         })
                     ))
             }

@@ -25,7 +25,10 @@ export function fetchPriceLists(servicesPricelist, itemsPricelist) {
 }
 
 export function fetchServicesPriceLists(location) {
-    let filters = ['first: 99', `${!!location ? `location_Uuid:"${location.uuid}"` : "location_Isnull: true"}`]
+    let filters = null
+    if (!!location) {
+        filters = [`location_Uuid:"${location.uuid}"`]
+    }
     let projections = ["id", "uuid", "name"]
     let payload = formatPageQuery("servicesPricelists",
         filters, projections
@@ -34,7 +37,10 @@ export function fetchServicesPriceLists(location) {
 }
 
 export function fetchItemsPriceLists(location) {
-    let filters = [`${!!location ? `location_Uuid:"${location.uuid}"` : "location_Isnull: true"}`]
+    let filters = null
+    if (!!location) {
+        filters = [`location_Uuid:"${location.uuid}"`]
+    }
     let projections = ["id", "uuid", "name"]
     let payload = formatPageQuery("itemsPricelists",
         filters, projections

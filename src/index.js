@@ -1,4 +1,3 @@
-import React from "react";
 import messages_en from "./translations/en.json";
 import reducer from "./reducer";
 import PriceListLoader from "./components/PriceListLoader";

@@ -8,8 +8,8 @@ class PriceListLoader extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (!_.isEqual(prevProps.fetchingPrice, this.props.fetchingPrice)) {
             this.props.fetchPriceLists(
-                !!this.props.servicesPricelists[this.props.fetchingPrice.servicesPricelist.id] ? null : this.props.fetchingPrice.servicesPricelist,
-                !!this.props.itemsPricelists[this.props.fetchingPrice.itemsPricelist.id] ? null : this.props.fetchingPrice.itemsPricelist,
+                !this.props.fetchingPrice.servicesPricelist || !this.props.fetchingPrice.servicesPricelist.id || !!this.props.servicesPricelists[this.props.fetchingPrice.servicesPricelist.id] ? null : this.props.fetchingPrice.servicesPricelist,
+                !this.props.fetchingPrice.itemsPricelist || !this.props.fetchingPrice.itemsPricelist.id || !!this.props.itemsPricelists[this.props.fetchingPrice.itemsPricelist.id] ? null : this.props.fetchingPrice.itemsPricelist,
             );
         }
     }

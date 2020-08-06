@@ -9,11 +9,11 @@ export function fetchPriceLists(servicesPricelist, itemsPricelist) {
     }
     if (!!servicesPricelist) {
         filters.push(`servicesPricelistId: ${decodeId(servicesPricelist.id)}`);
-        projections.push("services{id,priceOverrule}");
+        projections.push("services{id,p}");
     }
     if (!!itemsPricelist) {
         filters.push(`itemsPricelistId: ${decodeId(itemsPricelist.id)}`);
-        projections.push("items{id,priceOverrule}");
+        projections.push("items{id,p}");
     }
     let payload = formatQuery("pricelists",
         filters, projections

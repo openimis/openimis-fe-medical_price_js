@@ -28,7 +28,7 @@ None
 
 ## Other Modules Listened Redux Actions
 
-- `CLAIM_EDIT_HEALTH_FACILITY_SET`: triggering the load of the price lists (items and services) assiciated to a health facility
+- `CLAIM_EDIT_HEALTH_FACILITY_SET`: triggering the load of the price lists (items and services) associated to a health facility
 
 ## Configurations Options
 

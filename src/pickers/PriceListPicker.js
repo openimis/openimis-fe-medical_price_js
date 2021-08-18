@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { injectIntl } from "react-intl";
-
+import _ from "lodash";
 import { parseData, formatMessage, SelectInput, ProgressOrError } from "@openimis/fe-core";
 
-class PriceListPicker extends Component {
+class PricelistPicker extends Component {
   state = {
     loading: true,
     baseOptions: [],
@@ -98,4 +98,4 @@ class PriceListPicker extends Component {
   }
 }
 
-export default injectIntl(PriceListPicker);
+export default injectIntl(PricelistPicker);

@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { injectIntl } from "react-intl";
 import { fetchServicesPriceLists } from "../actions";
-import PriceListPicker from "./PriceListPicker";
+import PricelistPicker from "./PricelistPicker";
 
-const ServicesPriceListPicker = (props) => {
+const ServicesPricelistPicker = (props) => {
   const { fetchServicesPriceLists, name, value, onChange, readOnly, region, district } = props;
   return (
-    <PriceListPicker
+    <PricelistPicker
       label="servicesPricelist"
       fetchPriceLists={fetchServicesPriceLists}
       parseKey="servicesPricelists"
@@ -26,4 +26,4 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ fetchServicesPriceLists }, dispatch);
 };
 
-export default injectIntl(connect(null, mapDispatchToProps)(ServicesPriceListPicker));
+export default injectIntl(connect(null, mapDispatchToProps)(ServicesPricelistPicker));

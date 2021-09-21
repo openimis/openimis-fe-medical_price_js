@@ -6,14 +6,8 @@ import PricelistsFilters from "./PricelistsFilters";
 const isRowDisabled = (_, row) => Boolean(row.validityTo);
 const isRowLocked = () => false;
 
-const getLocationByType = (location, type) => {
-  if (location.type === type) {
-    return location;
-  } else if (location.parent?.type === type) {
-    return location.parent;
-  } else {
-    return null;
-  }
+const formatLocation = (location) => {
+  return location ? `${location.code} - ${location.name}` : "";
 };
 
 const HEADERS = [
@@ -62,14 +56,8 @@ const PricelistsSearcher = (props) => {
     () => [
       (pricelist) => pricelist.name,
       (pricelist) => formatDateFromISO(pricelist.pricelistDate),
-      (pricelist) =>
-        getLocationByType(pricelist.location, "R")
-          ? `${getLocationByType(pricelist.location, "R").code} - ${getLocationByType(pricelist.location, "R").name}`
-          : null,
-      (pricelist) =>
-        getLocationByType(pricelist.location, "D")
-          ? `${getLocationByType(pricelist.location, "D").code} - ${getLocationByType(pricelist.location, "D").name}`
-          : null,
+      (pricelist) => formatLocation(pricelist.location?.parent || pricelist.location),
+      (pricelist) => formatLocation(pricelist.location?.parent ? pricelist.location : null),
       (pricelist) => formatDateFromISO(pricelist.validityFrom),
       (pricelist) => formatDateFromISO(pricelist.validityTo),
       (pricelist) => (

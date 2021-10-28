@@ -6,7 +6,7 @@ import ReplayIcon from "@material-ui/icons/Replay";
 
 const PricelistForm = (props) => {
   const { readOnly, onBack, onSave, onReset, pricelist, onChange, fetchDetails, details } = props;
-  const canSave = () => pricelist.name && pricelist.location && pricelist.pricelistDate;
+  const canSave = () => pricelist.name && pricelist.pricelistDate;
   return (
     <>
       <Form

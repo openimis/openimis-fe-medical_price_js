@@ -151,7 +151,6 @@ function reducer(
         },
       };
     case "MEDICAL_PRICELIST_PRICELIST_RESP":
-      console.log(action);
       return {
         ...state,
         pricelists: {

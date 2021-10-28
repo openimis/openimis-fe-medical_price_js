@@ -37,7 +37,6 @@ class PricelistGeneralPanel extends FormPanel {
             <PublishedComponent
               pubRef="location.RegionPicker"
               value={region}
-              required
               readOnly={readOnly}
               withNull={true}
               onChange={this.onRegionChange}

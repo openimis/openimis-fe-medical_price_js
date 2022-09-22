@@ -34,5 +34,7 @@
   "medical_pricelist.updatePricelist.mutationLabel": "Pricelist updated - {name}",
   "medical_pricelist.deletePricelist.mutationLabel": "Pricelist deleted - {name}",
   "medical_pricelist.deletePricelistDialog.title": "Delete pricelist",
-  "medical_pricelist.deletePricelistDialog.message": "Are you sure you want to delete the pricelist {name}?"
+  "medical_pricelist.deletePricelistDialog.message": "Are you sure you want to delete the pricelist {name}?",
+  "medical_pricelist.table.selectAll":   "Select All",
+  "medical_pricelist.table.unselectAll": "Unselect All"
 }

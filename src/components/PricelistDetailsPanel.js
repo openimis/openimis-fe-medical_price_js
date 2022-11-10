@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { withTheme, withStyles } from "@material-ui/core/styles";
-import { Table, withModulesManager, combine, useTranslations, ErrorBoundary } from "@openimis/fe-core";
-import { Paper, Grid, Typography, Checkbox, Button } from "@material-ui/core";
+import { Table, withModulesManager, combine, useTranslations, ErrorBoundary, formatMessage } from "@openimis/fe-core";
+import { IconButton } from "@material-ui/core";
+import { Paper, Grid, Typography, Checkbox, Button, useStyles, Box } from "@material-ui/core";
 import PriceOverruleDialog from "./PriceOverruleDialog";
+import SelectAllButton from "./PricelistSelectAllButton" 
 
 const styles = (theme) => ({
   paper: theme.paper.paper,
@@ -45,6 +47,13 @@ const PricelistDetailsPanel = (props) => {
   const { formatMessage } = useTranslations("medical_pricelist", modulesManager);
   const [pagination, setPagination] = useState({ page: 0, afterCursor: null, beforeCursor: null });
   const [editedDetail, setEditedDetail] = useState(null);
+  
+  const ButtonHeader = (_) => {
+    return SelectAllButton(details, props, edited, onEditedChanged, edited)
+  }
+
+  HEADERS[0] = ButtonHeader
+
   useEffect(() => {
     const filters = [];
     if (pagination.afterCursor) {

@@ -75,6 +75,15 @@ class PricelistPicker extends Component {
     }
   }
 
+  filterOptions(options) {
+    if (this.props.hasOwnProperty('region') && this.props.hasOwnProperty('district')) {
+      if (this.props.region && this.props.district) return this.state.districtOptions;
+      if (this.props.region) return this.state.regionOptions;
+      return this.state.nationalOptions;
+    }
+    return options;
+  }
+
   render() {
     const { name, label, value, onChange, readOnly } = this.props;
     let options = [
@@ -88,7 +97,7 @@ class PricelistPicker extends Component {
       <SelectInput
         module="medical_pricelist"
         label={label}
-        options={options}
+        options={this.filterOptions(options)}
         name={name}
         value={value}
         readOnly={readOnly}

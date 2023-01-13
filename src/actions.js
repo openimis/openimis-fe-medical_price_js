@@ -55,7 +55,7 @@ export function fetchItemsPricelistById(mm, pricelistId) {
 export function fetchServicesPriceLists(location) {
   let filters = null;
   if (!!location) {
-    filters = [`location_Uuid:"${location.uuid}"`];
+    filters = [`locationUuid:"${location.uuid}"`];
   }
   let projections = ["id", "uuid", "name"];
   let payload = formatPageQuery("servicesPricelists", filters, projections);
@@ -65,7 +65,7 @@ export function fetchServicesPriceLists(location) {
 export function fetchItemsPriceLists(location) {
   let filters = null;
   if (!!location) {
-    filters = [`location_Uuid:"${location.uuid}"`];
+    filters = [`locationUuid:"${location.uuid}"`];
   }
   let projections = ["id", "uuid", "name"];
   let payload = formatPageQuery("itemsPricelists", filters, projections);

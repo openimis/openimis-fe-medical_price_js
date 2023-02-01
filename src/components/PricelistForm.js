@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+
+import ReplayIcon from "@material-ui/icons/Replay";
+
 import { withHistory, withModulesManager, Form } from "@openimis/fe-core";
+import { clearMedicalPricelistItems } from "../actions";
 import PricelistGeneralPanel from "./PricelistGeneralPanel";
 import PricelistDetailsPanel from "./PricelistDetailsPanel";
-import ReplayIcon from "@material-ui/icons/Replay";
-import { clearMedicalPricelistItems } from "../actions";
 
 const PricelistForm = (props) => {
   const { readOnly, onBack, onSave, onReset, pricelist, onChange, fetchDetails, details, isValid, clearMedicalPricelistItems} = props;

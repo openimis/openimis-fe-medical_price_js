@@ -239,13 +239,13 @@ export function medicalServicesValidationCheck(mm, variables) {
     }
     `,
     variables,
-    `PRICELIST_SERVICES_VALIDATION_FIELDS`,
+    `PRICELIST_SERVICES_FIELDS_VALIDATION`,
   );
 }
 
 export function medicalServicesValidationClear() {
   return (dispatch) => {
-    dispatch({ type: `PRICELIST_SERVICES_VALIDATION_FIELDS_CLEAR` });
+    dispatch({ type: `PRICELIST_SERVICES_FIELDS_VALIDATION_CLEAR` });
   };
 }
 
@@ -257,13 +257,13 @@ export function medicalItemsValidationCheck(mm, variables) {
     }
     `,
     variables,
-    `PRICELIST_ITEMS_VALIDATION_FIELDS`,
+    `PRICELIST_ITEMS_FIELDS_VALIDATION`,
   );
 }
 
 export function medicalItemsValidationClear() {
   return (dispatch) => {
-    dispatch({ type: `PRICELIST_ITEMS_VALIDATION_FIELDS_CLEAR` });
+    dispatch({ type: `PRICELIST_ITEMS_FIELDS_VALIDATION_CLEAR` });
   };
 }
 

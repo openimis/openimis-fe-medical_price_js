@@ -287,7 +287,7 @@ function reducer(
         fetchingPricelist: false,
         errorPricelist: formatServerError(action.payload),
       };
-    case "PRICELIST_SERVICES_VALIDATION_FIELDS_REQ":
+    case "PRICELIST_SERVICES_FIELDS_VALIDATION_REQ":
       return {
         ...state,
         validationFields: {
@@ -299,7 +299,7 @@ function reducer(
           },
         },
       };
-    case "PRICELIST_SERVICES_VALIDATION_FIELDS_RESP":
+    case "PRICELIST_SERVICES_FIELDS_VALIDATION_RESP":
       return {
         ...state,
         validationFields: {
@@ -311,7 +311,7 @@ function reducer(
           },
         },
       };
-    case "PRICELIST_SERVICES_VALIDATION_FIELDS_ERR":
+    case "PRICELIST_SERVICES_FIELDS_VALIDATION_ERR":
       return {
         ...state,
         validationFields: {
@@ -323,7 +323,7 @@ function reducer(
           },
         },
       };
-    case "PRICELIST_SERVICES_VALIDATION_FIELDS_CLEAR":
+    case "PRICELIST_SERVICES_FIELDS_VALIDATION_CLEAR":
       return {
         ...state,
         validationFields: {
@@ -335,7 +335,7 @@ function reducer(
           },
         },
       };
-    case "PRICELIST_ITEMS_VALIDATION_FIELDS_REQ":
+    case "PRICELIST_ITEMS_FIELDS_VALIDATION_REQ":
       return {
         ...state,
         validationFields: {
@@ -347,7 +347,7 @@ function reducer(
           },
         },
       };
-    case "PRICELIST_ITEMS_VALIDATION_FIELDS_RESP":
+    case "PRICELIST_ITEMS_FIELDS_VALIDATION_RESP":
       return {
         ...state,
         validationFields: {
@@ -359,7 +359,7 @@ function reducer(
           },
         },
       };
-    case "PRICELIST_ITEMS_VALIDATION_FIELDS_ERR":
+    case "PRICELIST_ITEMS_FIELDS_VALIDATION_ERR":
       return {
         ...state,
         validationFields: {
@@ -371,7 +371,7 @@ function reducer(
           },
         },
       };
-    case "PRICELIST_ITEMS_VALIDATION_FIELDS_CLEAR":
+    case "PRICELIST_ITEMS_FIELDS_VALIDATION_CLEAR":
       return {
         ...state,
         validationFields: {

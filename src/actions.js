@@ -6,6 +6,7 @@ import {
   formatPageQuery,
   decodeId,
   graphqlMutation,
+  graphqlWithVariables,
 } from "@openimis/fe-core";
 import { ITEMS_PRICELIST_TYPE, SERVICES_PRICELIST_TYPE } from "./constants";
 
@@ -228,4 +229,46 @@ export function deleteItemsPricelist(mm, uuid, clientMutationLabel) {
   `,
     { input: { uuids: [uuid], clientMutationLabel } }
   );
+}
+
+export function medicalServicesValidationCheck(mm, variables) {
+  return graphqlWithVariables(
+    `
+    query ($servicesPricelistName: String!) {
+      isValid: validateServicesPricelistName(servicesPricelistName: $servicesPricelistName)
+    }
+    `,
+    variables,
+    `PRICELIST_SERVICES_VALIDATION_FIELDS`,
+  );
+}
+
+export function medicalServicesValidationClear() {
+  return (dispatch) => {
+    dispatch({ type: `PRICELIST_SERVICES_VALIDATION_FIELDS_CLEAR` });
+  };
+}
+
+export function medicalItemsValidationCheck(mm, variables) {
+  return graphqlWithVariables(
+    `
+    query ($itemsPricelistName: String!) {
+      isValid: validateItemsPricelistName(itemsPricelistName: $itemsPricelistName)
+    }
+    `,
+    variables,
+    `PRICELIST_ITEMS_VALIDATION_FIELDS`,
+  );
+}
+
+export function medicalItemsValidationClear() {
+  return (dispatch) => {
+    dispatch({ type: `PRICELIST_ITEMS_VALIDATION_FIELDS_CLEAR` });
+  };
+}
+
+export function clearMedicalPricelistItems() {
+  return (dispatch) => {
+    dispatch({ type: "MEDICAL_PRICELIST_PRICELIST_CLEAR" });
+  };
 }

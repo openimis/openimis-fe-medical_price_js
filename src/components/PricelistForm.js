@@ -5,17 +5,17 @@ import { bindActionCreators } from "redux";
 import ReplayIcon from "@material-ui/icons/Replay";
 
 import { withHistory, withModulesManager, Form } from "@openimis/fe-core";
-import { clearMedicalPricelistItems } from "../actions";
+import { clearMedicalPricelists } from "../actions";
 import PricelistGeneralPanel from "./PricelistGeneralPanel";
 import PricelistDetailsPanel from "./PricelistDetailsPanel";
 
 const PricelistForm = (props) => {
-  const { readOnly, onBack, onSave, onReset, pricelist, onChange, fetchDetails, details, isValid, clearMedicalPricelistItems} = props;
+  const { readOnly, onBack, onSave, onReset, pricelist, onChange, fetchDetails, details, isValid, clearMedicalPricelists} = props;
   const canSave = () => pricelist.name && pricelist.pricelistDate && isValid === true;
 
   useEffect(() => {
     return () => { 
-      clearMedicalPricelistItems();
+      clearMedicalPricelists();
     }
   }, []);
 
@@ -53,7 +53,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ clearMedicalPricelistItems }, dispatch);
+  return bindActionCreators({ clearMedicalPricelists }, dispatch);
 };
 
 export default withHistory(withModulesManager(connect(mapStateToProps, mapDispatchToProps)(PricelistForm)));

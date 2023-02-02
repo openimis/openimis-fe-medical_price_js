@@ -267,7 +267,7 @@ export function medicalItemsValidationClear() {
   };
 }
 
-export function clearMedicalPricelistItems() {
+export function clearMedicalPricelists() {
   return (dispatch) => {
     dispatch({ type: "MEDICAL_PRICELIST_PRICELIST_CLEAR" });
   };

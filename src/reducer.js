@@ -1,5 +1,5 @@
 import { formatServerError, formatGraphQLError, parseData, pageInfo } from "@openimis/fe-core";
-import { SERVICES_PRICELIST_TYPE } from "./constants";
+import { SERVICES_PRICELIST_TYPE, ITEMS_PRICELIST_TYPE } from "./constants";
 
 function arrayToMap(arr) {
   return arr.reduce((map, a) => {
@@ -36,11 +36,13 @@ function reducer(
       services: {
         isFetching: false,
         items: {},
+        item: {},
         error: null,
       },
       items: {
         isFetching: false,
         items: {},
+        item: {},
         error: null,
       },
     },
@@ -68,6 +70,10 @@ function reducer(
           isFetching: true,
           error: null,
         },
+        items: {
+          ...state.items,
+          type: null,
+        }
       };
     case "MEDICAL_PRICELIST_SERVICES_RESP":
       const formatService = (service) => {
@@ -87,6 +93,7 @@ function reducer(
           isFetching: false,
           items: parseData(action.payload.data.medicalServices).map(formatService),
           pageInfo: pageInfo(action.payload.data.medicalServices),
+          type: SERVICES_PRICELIST_TYPE,
         },
       };
     case "MEDICAL_PRICELIST_SERVICES_ERR":
@@ -102,11 +109,15 @@ function reducer(
     case "MEDICAL_PRICELIST_ITEMS_REQ":
       return {
         ...state,
-        services: {
-          ...state.services,
+        items: {
+          ...state.items,
           isFetching: true,
           error: null,
         },
+        services: {
+          ...state.services,
+          type: null,
+        }
       };
     case "MEDICAL_PRICELIST_ITEMS_RESP":
       const formatItem = (item) => {
@@ -126,6 +137,7 @@ function reducer(
           isFetching: false,
           items: parseData(action.payload.data.medicalItems).map(formatItem),
           pageInfo: pageInfo(action.payload.data.medicalItems),
+          type: ITEMS_PRICELIST_TYPE,
         },
       };
     case "MEDICAL_PRICELIST_ITEMS_ERR":
@@ -162,6 +174,7 @@ function reducer(
               ...state.pricelists[action.meta.pricelistType].items,
               [action.payload.data.node.id]: action.payload.data.node,
             },
+            item: action.payload.data.node,
           },
         },
       };
@@ -174,6 +187,21 @@ function reducer(
             ...state.pricelists[action.meta.pricelistType],
             isFetching: false,
             error: formatServerError(action.payload),
+          },
+        },
+      };
+    case "MEDICAL_PRICELIST_PRICELIST_CLEAR":
+      return {
+        ...state,
+        pricelists: {
+          ...state.pricelists,
+          services: {
+            ...state.pricelists.services,
+            item: {},
+          },
+          items: {
+            ...state.pricelists.items,
+            item: {},
           },
         },
       };
@@ -258,6 +286,102 @@ function reducer(
         ...state,
         fetchingPricelist: false,
         errorPricelist: formatServerError(action.payload),
+      };
+    case "PRICELIST_SERVICES_FIELDS_VALIDATION_REQ":
+      return {
+        ...state,
+        validationFields: {
+          ...state.validationFields,
+          medicalServices: {
+            isValidating: true,
+            isValid: false,
+            validationError: null,
+          },
+        },
+      };
+    case "PRICELIST_SERVICES_FIELDS_VALIDATION_RESP":
+      return {
+        ...state,
+        validationFields: {
+          ...state.validationFields,
+          medicalServices: {
+            isValidating: false,
+            isValid: action.payload?.data.isValid,
+            validationError: formatGraphQLError(action.payload),
+          },
+        },
+      };
+    case "PRICELIST_SERVICES_FIELDS_VALIDATION_ERR":
+      return {
+        ...state,
+        validationFields: {
+          ...state.validationFields,
+          medicalServices: {
+            isValidating: false,
+            isValid: false,
+            validationError: formatServerError(action.payload),
+          },
+        },
+      };
+    case "PRICELIST_SERVICES_FIELDS_VALIDATION_CLEAR":
+      return {
+        ...state,
+        validationFields: {
+          ...state.validationFields,
+          medicalServices: {
+            isValidating: true,
+            isValid: false,
+            validationError: null,
+          },
+        },
+      };
+    case "PRICELIST_ITEMS_FIELDS_VALIDATION_REQ":
+      return {
+        ...state,
+        validationFields: {
+          ...state.validationFields,
+          medicalItems: {
+            isValidating: true,
+            isValid: false,
+            validationError: null,
+          },
+        },
+      };
+    case "PRICELIST_ITEMS_FIELDS_VALIDATION_RESP":
+      return {
+        ...state,
+        validationFields: {
+          ...state.validationFields,
+          medicalItems: {
+            isValidating: false,
+            isValid: action.payload?.data.isValid,
+            validationError: formatGraphQLError(action.payload),
+          },
+        },
+      };
+    case "PRICELIST_ITEMS_FIELDS_VALIDATION_ERR":
+      return {
+        ...state,
+        validationFields: {
+          ...state.validationFields,
+          medicalItems: {
+            isValidating: false,
+            isValid: false,
+            validationError: formatServerError(action.payload),
+          },
+        },
+      };
+    case "PRICELIST_ITEMS_FIELDS_VALIDATION_CLEAR":
+      return {
+        ...state,
+        validationFields: {
+          ...state.validationFields,
+          medicalItems: {
+            isValidating: true,
+            isValid: false,
+            validationError: null,
+          },
+        },
       };
     default:
       return state;

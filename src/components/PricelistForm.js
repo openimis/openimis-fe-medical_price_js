@@ -10,13 +10,24 @@ import PricelistGeneralPanel from "./PricelistGeneralPanel";
 import PricelistDetailsPanel from "./PricelistDetailsPanel";
 
 const PricelistForm = (props) => {
-  const { readOnly, onBack, onSave, onReset, pricelist, onChange, fetchDetails, details, isValid, clearMedicalPricelists} = props;
+  const {
+    readOnly,
+    onBack,
+    onSave,
+    onReset,
+    pricelist,
+    onChange,
+    fetchDetails,
+    details,
+    isValid,
+    clearMedicalPricelists,
+  } = props;
   const canSave = () => pricelist.name && pricelist.pricelistDate && isValid === true;
 
   useEffect(() => {
-    return () => { 
+    return () => {
       clearMedicalPricelists();
-    }
+    };
   }, []);
 
   return (
@@ -49,7 +60,9 @@ const PricelistForm = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  isValid: !!state.medical_pricelist.validationFields?.medicalServices?.isValid || !!state.medical_pricelist.validationFields?.medicalItems?.isValid,
+  isValid:
+    !!state.medical_pricelist.validationFields?.medicalServices?.isValid ||
+    !!state.medical_pricelist.validationFields?.medicalItems?.isValid,
 });
 
 const mapDispatchToProps = (dispatch) => {

@@ -4,7 +4,10 @@ import { connect } from "react-redux";
 import { withStyles, withTheme } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 
-import { FormPanel, withHistory, withModulesManager, PublishedComponent, ValidatedTextInput } from "@openimis/fe-core";
+import { 
+  FormPanel, withHistory, withModulesManager, 
+  PublishedComponent, ValidatedTextInput 
+} from "@openimis/fe-core";
 import {
   medicalServicesValidationCheck,
   medicalServicesValidationClear,

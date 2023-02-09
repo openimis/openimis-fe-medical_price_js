@@ -11,8 +11,10 @@ import {
 import {
   medicalServicesValidationCheck,
   medicalServicesValidationClear,
+  medicalServicesSetValid,
   medicalItemsValidationCheck,
   medicalItemsValidationClear,
+  medicalItemsSetValid,
 } from "../actions";
 import { SERVICES_PRICELIST_TYPE } from "../constants";
 
@@ -58,6 +60,7 @@ class PricelistGeneralPanel extends FormPanel {
             <ValidatedTextInput
               action={servicesOrItems ? medicalServicesValidationCheck : medicalItemsValidationCheck}
               clearAction={servicesOrItems ? medicalServicesValidationClear : medicalItemsValidationClear}
+              setValidAction={servicesOrItems ? medicalServicesSetValid : medicalItemsSetValid}
               itemQueryIdentifier={servicesOrItems ? "servicesPricelistName" : "itemsPricelistName"}
               isValid={servicesOrItems ? isMedicalServiceValid : isMedicalItemValid}
               isValidating={servicesOrItems ? isMedicalServiceValidating : isMedicalItemValidating}

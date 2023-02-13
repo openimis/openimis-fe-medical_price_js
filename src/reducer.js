@@ -73,7 +73,7 @@ function reducer(
         items: {
           ...state.items,
           type: null,
-        }
+        },
       };
     case "MEDICAL_PRICELIST_SERVICES_RESP":
       const formatService = (service) => {
@@ -117,7 +117,7 @@ function reducer(
         services: {
           ...state.services,
           type: null,
-        }
+        },
       };
     case "MEDICAL_PRICELIST_ITEMS_RESP":
       const formatItem = (item) => {
@@ -335,6 +335,18 @@ function reducer(
           },
         },
       };
+    case "PRICELIST_SERVICES_FIELDS_VALIDATION_SET_VALID":
+      return {
+        ...state,
+        validationFields: {
+          ...state.validationFields,
+          medicalServices: {
+            isValidating: false,
+            isValid: true,
+            validationError: null,
+          },
+        },
+      };
     case "PRICELIST_ITEMS_FIELDS_VALIDATION_REQ":
       return {
         ...state,
@@ -379,6 +391,18 @@ function reducer(
           medicalItems: {
             isValidating: true,
             isValid: false,
+            validationError: null,
+          },
+        },
+      };
+    case "PRICELIST_ITEMS_FIELDS_VALIDATION_SET_VALID":
+      return {
+        ...state,
+        validationFields: {
+          ...state.validationFields,
+          medicalItems: {
+            isValidating: false,
+            isValid: true,
             validationError: null,
           },
         },

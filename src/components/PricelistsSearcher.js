@@ -83,12 +83,16 @@ const PricelistsSearcher = (props) => {
     const params = Object.keys(state.filters)
       .filter((contrib) => !!state.filters[contrib].filter)
       .map((contrib) => state.filters[contrib].filter);
-    params.push(`first: ${state.pageSize}`);
+    if (!state.beforeCursor && !state.afterCursor) {
+      params.push(`first: ${state.pageSize}`);
+    }
     if (state.afterCursor) {
       params.push(`after: "${state.afterCursor}"`);
+      params.push(`first: ${state.pageSize}`);
     }
     if (state.beforeCursor) {
       params.push(`before: "${state.beforeCursor}"`);
+      params.push(`last: ${state.pageSize}`);
     }
     return params;
   }, []);

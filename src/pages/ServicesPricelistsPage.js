@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { withTheme, withStyles } from "@material-ui/core/styles";
 import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import { withHistory, historyPush, combine, withModulesManager, useTranslations, withTooltip } from "@openimis/fe-core";
+import {
+  withHistory,
+  historyPush,
+  combine,
+  withModulesManager,
+  useTranslations,
+  withTooltip,
+  clearCurrentPaginationPage,
+} from "@openimis/fe-core";
 import PricelistsSearcher from "../components/PricelistsSearcher";
 import { fetchServicesPricelistsSummaries, deleteServicesPricelist } from "../actions";
-import { RIGHT_SERVICES_PRICELISTS_DELETE, RIGHT_SERVICES_PRICELISTS_ADD } from "../constants";
+import { RIGHT_SERVICES_PRICELISTS_DELETE, RIGHT_SERVICES_PRICELISTS_ADD, MODULE_NAME } from "../constants";
 
 const styles = (theme) => ({
   page: theme.page,
@@ -17,6 +25,7 @@ const ServicesPricelistsPage = (props) => {
   const { classes, modulesManager, history } = props;
   const { formatMessage, formatMessageWithValues } = useTranslations("medical_pricelist", modulesManager);
   const rights = useSelector((state) => state.core.user?.i_user?.rights ?? []);
+  const module = useSelector((state) => state.core?.savedPagination?.module);
   const data = useSelector((state) => state.medical_pricelist.summaries.services);
   const dispatch = useDispatch();
 
@@ -41,6 +50,20 @@ const ServicesPricelistsPage = (props) => {
       )
     );
   };
+
+  useEffect(() => {
+    if (module !== MODULE_NAME) dispatch(clearCurrentPaginationPage());
+
+    return () => {
+      const { location, history } = props;
+      const {
+        location: { pathname },
+      } = history;
+      const urlPath = location.pathname;
+
+      if (!pathname.includes(urlPath)) dispatch(clearCurrentPaginationPage());
+    };
+  }, [module]);
 
   return (
     <div className={classes.page}>

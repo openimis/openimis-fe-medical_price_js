@@ -10,3 +10,4 @@ export const RIGHT_ITEMS_PRICELISTS_DELETE = 121304;
 export const RIGHT_ITEMS_PRICELISTS_DUPLICATE = 121305;
 export const SERVICES_PRICELIST_TYPE = "services";
 export const ITEMS_PRICELIST_TYPE = "items";
+export const MODULE_NAME = "medical_pricelist";

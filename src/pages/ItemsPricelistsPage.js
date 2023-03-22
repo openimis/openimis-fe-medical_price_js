@@ -14,7 +14,7 @@ import {
 } from "@openimis/fe-core";
 import PricelistsSearcher from "../components/PricelistsSearcher";
 import { fetchItemsPricelistsSummaries, deleteItemsPricelist } from "../actions";
-import { RIGHT_ITEMS_PRICELISTS_DELETE, RIGHT_ITEMS_PRICELISTS_ADD } from "../constants";
+import { RIGHT_ITEMS_PRICELISTS_DELETE, RIGHT_ITEMS_PRICELISTS_ADD, MODULE_NAME} from "../constants";
 
 const styles = (theme) => ({
   page: {
@@ -54,8 +54,7 @@ const ItemsPricelistsPage = (props) => {
   };
 
   useEffect(() => {
-    const moduleName = "medical_pricelist";
-    if (module !== moduleName) dispatch(clearCurrentPaginationPage());
+    if (module !== MODULE_NAME) dispatch(clearCurrentPaginationPage());
 
     return () => {
       const { location, history } = props;

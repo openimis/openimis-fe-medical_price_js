@@ -47,6 +47,7 @@ const PricelistForm = (props) => {
         onEditedChanged={onChange}
         details={details}
         fetchDetails={fetchDetails}
+        openDirty={onSave}
         actions={[
           {
             doIt: onReset,

@@ -1,8 +1,12 @@
 import React, { useCallback, useState } from "react";
+
 import { Tooltip, IconButton } from "@material-ui/core";
+import { withTheme, withStyles } from "@material-ui/core/styles";
 import { Tab as TabIcon, Delete as DeleteIcon } from "@material-ui/icons";
-import { useTranslations, ConfirmDialog, Searcher, withModulesManager } from "@openimis/fe-core";
+
+import { combine, useTranslations, ConfirmDialog, Searcher, withModulesManager } from "@openimis/fe-core";
 import PricelistsFilters from "./PricelistsFilters";
+
 const isRowDisabled = (_, row) => Boolean(row.validityTo);
 const isRowLocked = () => false;
 
@@ -24,10 +28,15 @@ const ALIGNS = HEADERS.map((_, i) => i === HEADERS.length - 1 && "right");
 const getAligns = () => ALIGNS;
 const getHeaders = () => HEADERS;
 
+const styles = (theme) => ({
+  horizontalButtonContainer: theme.buttonContainer.horizontal,
+});
+
 const PricelistsSearcher = (props) => {
   const {
     pageInfo,
     items,
+    classes,
     isFetching,
     isFetched,
     cacheFiltersKey,
@@ -61,7 +70,7 @@ const PricelistsSearcher = (props) => {
       (pricelist) => formatDateFromISO(pricelist.validityFrom),
       (pricelist) => formatDateFromISO(pricelist.validityTo),
       (pricelist) => (
-        <>
+        <div className={classes.horizontalButtonContainer}>
           <Tooltip title={formatMessage("openNewTab")}>
             <IconButton onClick={() => onDoubleClick(pricelist, true)}>
               <TabIcon />
@@ -74,7 +83,7 @@ const PricelistsSearcher = (props) => {
               </IconButton>
             </Tooltip>
           )}
-        </>
+        </div>
       ),
     ],
     []
@@ -134,4 +143,6 @@ const PricelistsSearcher = (props) => {
   );
 };
 
-export default withModulesManager(PricelistsSearcher);
+const enhance = combine(withTheme, withModulesManager, withStyles(styles))
+
+export default enhance(PricelistsSearcher);

@@ -38,6 +38,8 @@ const ItemsPriceListDetailsPage = (props) => {
   const [resetKey, setResetKey] = useState(null);
   const [pricelist, setPricelist] = useState({});
 
+  console.log(pricelist);
+
   useEffect(() => {
     if (match.params.price_list_id) {
       fetchItemsPricelistById(modulesManager, match.params.price_list_id);
@@ -79,7 +81,7 @@ const ItemsPriceListDetailsPage = (props) => {
   };
 
   return (
-    <div className={clsx(classes.page, { [classes.locked]: isLocked })}>
+    <div className={clsx(classes.page, pricelist.validityTo && classes.locked)}>
       <ErrorBoundary>
         <ProgressOrError progress={isFetching} error={error} />
         {!isFetching && (

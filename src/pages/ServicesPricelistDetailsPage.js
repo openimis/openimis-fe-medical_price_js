@@ -79,7 +79,7 @@ const ServicesPriceListDetailsPage = (props) => {
   };
 
   return (
-    <div className={clsx(classes.page, { [classes.locked]: isLocked })}>
+    <div className={clsx(classes.page, pricelist.validityTo && classes.locked)}>
       <ErrorBoundary>
         <ProgressOrError progress={isFetching} error={error} />
         {!isFetching && (

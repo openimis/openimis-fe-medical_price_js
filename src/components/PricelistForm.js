@@ -22,7 +22,8 @@ const PricelistForm = (props) => {
     isValid,
     clearMedicalPricelists,
   } = props;
-  const canSave = () => pricelist.name && pricelist.pricelistDate && isValid === true;
+
+  const canSave = () => pricelist.name && pricelist.pricelistDate && !pricelist.validityTo && isValid === true;
 
   useEffect(() => {
     return () => {

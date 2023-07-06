@@ -12,6 +12,7 @@
   "medical_pricelist.openNewTab": "Open in a new tab",
   "medical_pricelist.addNewPriceListTooltip": "Add a new pricelist",
   "medical_pricelist.deletePricelistTooltip": "Delete",
+  "medical_pricelist.nameTaken": "Name already taken.",
   "medical_pricelist.pricelistForm.title": "Pricelist ({label})",
   "medical_pricelist.pricelistForm.selectAll": "Select All",
   "medical_pricelist.pricelistForm.table.title": "Details",

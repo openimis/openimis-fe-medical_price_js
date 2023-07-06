@@ -6,6 +6,7 @@ import {
   formatPageQuery,
   decodeId,
   graphqlMutation,
+  graphqlWithVariables,
 } from "@openimis/fe-core";
 import { ITEMS_PRICELIST_TYPE, SERVICES_PRICELIST_TYPE } from "./constants";
 
@@ -55,7 +56,7 @@ export function fetchItemsPricelistById(mm, pricelistId) {
 export function fetchServicesPriceLists(location) {
   let filters = null;
   if (!!location) {
-    filters = [`location_Uuid:"${location.uuid}"`];
+    filters = [`locationUuid:"${location.uuid}"`];
   }
   let projections = ["id", "uuid", "name"];
   let payload = formatPageQuery("servicesPricelists", filters, projections);
@@ -65,7 +66,7 @@ export function fetchServicesPriceLists(location) {
 export function fetchItemsPriceLists(location) {
   let filters = null;
   if (!!location) {
-    filters = [`location_Uuid:"${location.uuid}"`];
+    filters = [`locationUuid:"${location.uuid}"`];
   }
   let projections = ["id", "uuid", "name"];
   let payload = formatPageQuery("itemsPricelists", filters, projections);
@@ -228,4 +229,58 @@ export function deleteItemsPricelist(mm, uuid, clientMutationLabel) {
   `,
     { input: { uuids: [uuid], clientMutationLabel } }
   );
+}
+
+export function medicalServicesValidationCheck(mm, variables) {
+  return graphqlWithVariables(
+    `
+    query ($servicesPricelistName: String!) {
+      isValid: validateServicesPricelistName(servicesPricelistName: $servicesPricelistName)
+    }
+    `,
+    variables,
+    `PRICELIST_SERVICES_FIELDS_VALIDATION`,
+  );
+}
+
+export function medicalServicesSetValid() {
+  return (dispatch) => {
+    dispatch({ type: `PRICELIST_SERVICES_FIELDS_VALIDATION_SET_VALID` });
+  };
+}
+
+export function medicalServicesValidationClear() {
+  return (dispatch) => {
+    dispatch({ type: `PRICELIST_SERVICES_FIELDS_VALIDATION_CLEAR` });
+  };
+}
+
+export function medicalItemsValidationCheck(mm, variables) {
+  return graphqlWithVariables(
+    `
+    query ($itemsPricelistName: String!) {
+      isValid: validateItemsPricelistName(itemsPricelistName: $itemsPricelistName)
+    }
+    `,
+    variables,
+    `PRICELIST_ITEMS_FIELDS_VALIDATION`,
+  );
+}
+
+export function medicalItemsValidationClear() {
+  return (dispatch) => {
+    dispatch({ type: `PRICELIST_ITEMS_FIELDS_VALIDATION_CLEAR` });
+  };
+}
+
+export function medicalItemsSetValid() {
+  return (dispatch) => {
+    dispatch({ type: `PRICELIST_ITEMS_FIELDS_VALIDATION_SET_VALID` });
+  };
+}
+
+export function clearMedicalPricelists() {
+  return (dispatch) => {
+    dispatch({ type: "MEDICAL_PRICELIST_PRICELIST_CLEAR" });
+  };
 }

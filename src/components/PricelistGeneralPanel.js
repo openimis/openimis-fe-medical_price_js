@@ -80,7 +80,7 @@ class PricelistGeneralPanel extends FormPanel {
               pubRef="location.RegionPicker"
               value={region}
               readOnly={readOnly}
-              withNull={true}
+              withNull={false}
               onChange={this.onRegionChange}
             />
           </Grid>
@@ -89,7 +89,7 @@ class PricelistGeneralPanel extends FormPanel {
               region={region}
               value={district}
               pubRef="location.DistrictPicker"
-              withNull={true}
+              withNull={false}
               readOnly={readOnly}
               onChange={this.onDistrictChange}
             />

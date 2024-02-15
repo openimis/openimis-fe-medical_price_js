@@ -14,20 +14,6 @@ const formatLocation = (location) => {
   return location ? `${location.code} - ${location.name}` : "";
 };
 
-const HEADERS = [
-  "medical_pricelist.name",
-  "medical_pricelist.pricelist_date",
-  "medical_pricelist.region",
-  "medical_pricelist.district",
-  "medical_pricelist.valid_from",
-  "medical_pricelist.valid_to",
-  "",
-];
-const ALIGNS = HEADERS.map((_, i) => i === HEADERS.length - 1 && "right");
-
-const getAligns = () => ALIGNS;
-const getHeaders = () => HEADERS;
-
 const styles = (theme) => ({
   horizontalButtonContainer: theme.buttonContainer.horizontal,
 });
@@ -61,14 +47,26 @@ const PricelistsSearcher = (props) => {
     setPricelistToDelete(null);
   };
 
-  const itemFormatters = useCallback(
-    () => [
+  const headers = (filters) => [
+    "medical_pricelist.name",
+    "medical_pricelist.pricelist_date",
+    "medical_pricelist.region",
+    "medical_pricelist.district",
+    filters?.showHistory?.value ? "medical_pricelist.valid_from" : null,
+    filters?.showHistory?.value ? "medical_pricelist.valid_to" : null,
+    "",
+  ];
+
+  const getAligns = () => headers().map((_, i) => i === headers().length - 1 && "right");
+
+  const itemFormatters = useCallback((filters) => {
+    return [
       (pricelist) => pricelist.name,
       (pricelist) => formatDateFromISO(pricelist.pricelistDate),
       (pricelist) => formatLocation(pricelist.location?.parent || pricelist.location),
       (pricelist) => formatLocation(pricelist.location?.parent ? pricelist.location : null),
-      (pricelist) => formatDateFromISO(pricelist.validityFrom),
-      (pricelist) => formatDateFromISO(pricelist.validityTo),
+      (pricelist) => (filters?.showHistory?.value ? formatDateFromISO(pricelist.validityFrom) : null),
+      (pricelist) => (filters?.showHistory?.value ? formatDateFromISO(pricelist.validityTo) : null),
       (pricelist) => (
         <div className={classes.horizontalButtonContainer}>
           <Tooltip title={formatMessage("openNewTab")}>
@@ -85,9 +83,9 @@ const PricelistsSearcher = (props) => {
           )}
         </div>
       ),
-    ],
-    []
-  );
+    ];
+  }, []);
+  
   const filtersToQueryParams = useCallback((state) => {
     const params = Object.keys(state.filters)
       .filter((contrib) => !!state.filters[contrib].filter)
@@ -105,6 +103,7 @@ const PricelistsSearcher = (props) => {
     }
     return params;
   }, []);
+
   return (
     <>
       {confirmPricelistToDelete && (
@@ -132,7 +131,7 @@ const PricelistsSearcher = (props) => {
         fetch={onFiltersChange}
         rowDisabled={isRowDisabled}
         rowLocked={isRowLocked}
-        headers={getHeaders}
+        headers={headers}
         aligns={getAligns}
         itemFormatters={itemFormatters}
         rowIdentifier={(r) => r.uuid}
